@@ -38,12 +38,6 @@
                   "hidden md:flex items-center gap-0.5 bg-white/[0.04] border border-white/[0.07] rounded-full px-1.5 py-1",
                 children: [
                   (0, s.jsx)(l.default, {
-                    href: "/trade",
-                    className:
-                      "px-4 py-1.5 rounded-full text-sm text-white/70 hover:text-white hover:bg-white/[0.08] transition-all duration-200 font-medium",
-                    children: "Trade",
-                  }),
-                  (0, s.jsx)(l.default, {
                     href: "/portfolio",
                     className:
                       "px-4 py-1.5 rounded-full text-sm text-white/70 hover:text-white hover:bg-white/[0.08] transition-all duration-200 font-medium",

@@ -1291,8 +1291,7 @@ Read more: https://nextjs.org/docs/messages/next-image-unconfigured-localpattern
         );
       let l = (0, n.findClosestQuality)(i, e),
         a = (0, o.getDeploymentId)();
-      return `${e.path}`
-      }`;
+      return t;
     }
     i.__next_img_default = !0;
     let l = i;

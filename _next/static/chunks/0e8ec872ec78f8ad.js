@@ -260,12 +260,6 @@
                 className: "flex items-center gap-4 flex-wrap",
                 children: [
                   (0, t.jsx)(s.default, {
-                    href: "/trade",
-                    className:
-                      "inline-flex items-center gap-2 bg-[#DC2626] hover:bg-[#EF4444] text-white font-semibold px-8 py-3 rounded-full text-sm transition-all hover:shadow-[0_0_24px_rgba(220,38,38,0.3)]",
-                    children: "Trade Now",
-                  }),
-                  (0, t.jsx)(s.default, {
                     href: "https://t.me/TradeHyper_Claw",
                     className:
                       "inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.1] text-white/70 hover:text-white font-medium px-8 py-3 rounded-full text-sm transition-all",
