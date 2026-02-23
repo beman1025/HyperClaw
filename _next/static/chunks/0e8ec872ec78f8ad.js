@@ -266,10 +266,10 @@
                     children: "Trade Now",
                   }),
                   (0, t.jsx)(s.default, {
-                    href: "/developers",
+                    href: "https://t.me/TradeHyper_Claw",
                     className:
                       "inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.1] text-white/70 hover:text-white font-medium px-8 py-3 rounded-full text-sm transition-all",
-                    children: "Build an Agent",
+                    children: "Join Community",
                   }),
                 ],
               }),

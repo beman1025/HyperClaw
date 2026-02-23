@@ -187,7 +187,7 @@
                 ],
               }),
               (0, s.jsx)("a", {
-                href: "https://x.com/tradehyperclaw",
+                href: "https://x.com/TradeHyper_Claw",
                 className:
                   "text-white/40 hover:text-white/60 transition-colors",
                 target: "_blank",

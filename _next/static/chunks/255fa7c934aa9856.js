@@ -2410,7 +2410,7 @@
                       ],
                     }),
                     (0, s.jsxs)(t.default, {
-                      href: "/developers",
+                      href: "https://t.me/TradeHyper_Claw",
                       className:
                         "inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.1] text-white/80 hover:text-white font-medium px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base transition-all duration-200",
                       children: [
@@ -2426,7 +2426,7 @@
                             d: "M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5",
                           }),
                         }),
-                        (0, s.jsx)("span", { children: "Build an Agent" }),
+                        (0, s.jsx)("span", { children: "Join Community" }),
                       ],
                     }),
                   ],
@@ -2550,7 +2550,7 @@
                     className: "flex items-center gap-2.5 mb-5",
                     children: [
                       (0, s.jsx)("a", {
-                        href: "https://x.com/tradehyperclaw",
+                        href: "https://x.com/TradeHyper_Claw",
                         target: "_blank",
                         rel: "noopener noreferrer",
                         className:
