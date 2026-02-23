@@ -1,0 +1,202 @@
+{"name":"HyperClaw Trading Skill","version":"1.0.0","description":"Enables
+OpenClaw agents to trade crypto perpetual futures on HyperClaw (powered by
+Orderly
+Network)","broker_id":"hyper_claw","network":"mainnet","capabilities":["wallet_creation","account_registration","deposit","spot_trading","perpetual_trading","position_management","withdrawal"],"supported_pairs":["PERP_BTC_USDC","PERP_ETH_USDC","PERP_SOL_USDC","PERP_ARB_USDC","PERP_OP_USDC","PERP_DOGE_USDC","PERP_WIF_USDC","PERP_PEPE_USDC"],"api_base_url":"https://api.orderly.org","max_leverage":50,"fees":{"note":"Fees
+are set by the broker and vary by account tier. Use the Orderly GET
+/v1/client/info endpoint to retrieve your account's actual maker/taker fee
+rates."},"skill_prompt":"# HyperClaw Trading Skill for OpenClaw Agents\n\nYou
+are an AI trading agent with the ability to trade crypto perpetual futures on
+HyperClaw, a decentralized exchange powered by Orderly Network. This skill gives
+you full access to create wallets, deposit funds, place orders, manage
+positions, and withdraw — all programmatically via REST API.\n\n## Overview\n\n-
+**Exchange**: HyperClaw (broker_id: `hyper_claw`)\n- **Backend**: Orderly
+Network (shared orderbook, CEX-grade matching)\n- **Assets**: 50+ perpetual
+pairs (BTC, ETH, SOL, ARB, etc.) settled in USDC\n- **Leverage**: Up to 100x\n-
+**Chains**: Base (8453), Arbitrum (42161), Optimism (10), Polygon (137),
+Ethereum (1)\n- **Authentication**: ed25519 key-based signing\n\n## API Base
+URLs\n\n- **API**: `https://api-evm.orderly.org`\n\n## Step 1: Create a
+Wallet\n\nGenerate an EVM wallet (private key + address). This is the agent's
+trading wallet.\n\n```javascript\nimport { generatePrivateKey,
+privateKeyToAccount } from 'viem/accounts'\n\nconst privateKey =
+generatePrivateKey()\nconst account = privateKeyToAccount(privateKey)\n//
+account.address is your wallet address\n```\n\nStore the private key securely.
+You'll need it for signing transactions.\n\n## Step 2: Register on Orderly
+Network\n\nRegister your wallet with Orderly using broker_id
+`ambassador`.\n\n### 2a. Get Registration Nonce\n\n```\nGET
+/v1/registration_nonce\n```\n\n### 2b. Register Account\n\nSign an EIP-712
+message with your wallet and submit:\n\n```\nPOST
+/v1/register_account\n```\n\nBody:\n```json\n{\n \"message\": {\n \"brokerId\":
+\"hyper_claw\",\n \"chainId\": 42161,\n \"timestamp\":
+<current_timestamp_ms
+  >,\n \"registrationNonce\": \"<nonce_from_step_2a
+    >\"\n },\n \"signature\": \"<eip712_signature
+      >\",\n \"userAddress\": \"<your_wallet_address
+        >\"\n}\n```\n\n### 2c. Create Orderly Key (ed25519)\n\nGenerate an
+        ed25519 keypair for API authentication:\n\n```\nPOST
+        /v1/orderly_key\n```\n\nBody:\n```json\n{\n \"message\": {\n
+        \"brokerId\": \"hyper_claw\",\n \"chainId\": 42161,\n \"orderlyKey\":
+        \"<ed25519_public_key
+          >\",\n \"scope\": \"trading\",\n \"timestamp\":
+          <current_timestamp_ms
+            >,\n \"expiration\":
+            <timestamp_ms_30_days_from_now
+              >\n },\n \"signature\": \"<eip712_signature
+                >\",\n \"userAddress\": \"<your_wallet_address
+                  >\"\n}\n```\n\n## Step 3: Deposit Funds\n\nDeposit USDC to the
+                  Orderly vault smart contract on-chain.\n\n**Vault Contract
+                  (Arbitrum One)**: Check Orderly docs for current
+                  address.\n\nCall `deposit(accountId, brokerHash, tokenHash,
+                  amount)` on the vault contract.\n\nBridge or buy USDC on
+                  Arbitrum One to fund the trading wallet.\n\n## Step 4: API
+                  Authentication\n\nEvery API request requires these
+                  headers:\n\n```\norderly-account-id:
+                  <your_account_id
+                    >\norderly-key: ed25519:<your_ed25519_public_key
+                      >\norderly-signature:
+                      <ed25519_signature_base64url
+                        >\norderly-timestamp:
+                        <current_timestamp_ms
+                          >\n```\n\n**Signature construction**:\n```\nmessage =
+                          timestamp + HTTP_METHOD + path +
+                          body_if_post\nsignature = ed25519_sign(message,
+                          private_key)\n```\n\n## Step 5: Trading\n\n### Get
+                          Available Markets\n\n```\nGET
+                          /v1/public/info\n```\n\nReturns all available trading
+                          pairs with their parameters.\n\n### Get Market
+                          Price\n\n```\nGET
+                          /v1/public/market_trades?symbol=PERP_BTC_USDC&limit=1\n```\n\n###
+                          Place an Order\n\n```\nPOST
+                          /v1/order\n```\n\nBody:\n```json\n{\n \"symbol\":
+                          \"PERP_BTC_USDC\",\n \"order_type\": \"MARKET\",\n
+                          \"side\": \"BUY\",\n \"order_quantity\":
+                          0.01\n}\n```\n\nOrder types: `MARKET`, `LIMIT`, `IOC`,
+                          `FOK`, `POST_ONLY`\n\n### Set Take Profit & Stop Loss
+                          (TP/SL)\n\nUse algo orders to attach TP/SL to a
+                          position:\n\n```\nPOST /v1/algo/order\n```\n\n**Stop
+                          Loss example** (close long if BTC drops to
+                          $90,000):\n```json\n{\n \"symbol\":
+                          \"PERP_BTC_USDC\",\n \"algo_type\": \"STOP\",\n
+                          \"side\": \"SELL\",\n \"order_type\": \"MARKET\",\n
+                          \"order_quantity\": 0.01,\n \"trigger_price\":
+                          90000,\n \"reduce_only\": true\n}\n```\n\n**Take
+                          Profit example** (close long if BTC hits
+                          $110,000):\n```json\n{\n \"symbol\":
+                          \"PERP_BTC_USDC\",\n \"algo_type\": \"TAKE_PROFIT\",\n
+                          \"side\": \"SELL\",\n \"order_type\": \"MARKET\",\n
+                          \"order_quantity\": 0.01,\n \"trigger_price\":
+                          110000,\n \"reduce_only\": true\n}\n```\n\n**TP/SL
+                          together** (bracket order — set both at
+                          once):\n```json\n{\n \"symbol\": \"PERP_BTC_USDC\",\n
+                          \"algo_type\": \"BRACKET\",\n \"side\": \"SELL\",\n
+                          \"order_quantity\": 0.01,\n \"tp_trigger_price\":
+                          110000,\n \"sl_trigger_price\": 90000,\n
+                          \"reduce_only\": true\n}\n```\n\nCancel an algo order:
+                          `DELETE /v1/algo/order?order_id=X`\n\nGet active algo
+                          orders: `GET /v1/algo/orders`\n\n### Get Open
+                          Positions\n\n```\nGET /v1/positions\n```\n\n### Close
+                          a Position\n\nPlace an opposite order with
+                          `reduce_only: true`:\n\n```json\n{\n \"symbol\":
+                          \"PERP_BTC_USDC\",\n \"order_type\": \"MARKET\",\n
+                          \"side\": \"SELL\",\n \"order_quantity\": 0.01,\n
+                          \"reduce_only\": true\n}\n```\n\n### Get Account
+                          Info\n\n```\nGET /v1/client/info\n```\n\n### Get
+                          P&L\n\nCheck positions endpoint for `unrealized_pnl`
+                          and use `/v1/pnl_settlement/history` for realized
+                          P&L.\n\n### Set Leverage\n\n```\nPOST
+                          /v1/client/leverage\n```\n\nBody:\n```json\n{\n
+                          \"leverage\": 10\n}\n```\n\nThis sets the max leverage
+                          for your account (1-50). Lower = safer.\n\n###
+                          Trailing Stop\n\n```\nPOST
+                          /v1/algo/order\n```\n\n```json\n{\n \"symbol\":
+                          \"PERP_BTC_USDC\",\n \"algo_type\":
+                          \"TRAILING_STOP\",\n \"side\": \"SELL\",\n
+                          \"order_quantity\": 0.01,\n \"callback_rate\": 0.02,\n
+                          \"reduce_only\": true\n}\n```\n\n`callback_rate: 0.02`
+                          = 2% trailing distance. The stop follows the price up
+                          and triggers if it drops 2% from the peak.\n\n## Step
+                          6: Withdraw\n\n```\nPOST
+                          /v1/withdraw\n```\n\nBody:\n```json\n{\n \"token\":
+                          \"USDC\",\n \"amount\": \"100\",\n \"chainId\":
+                          42161\n}\n```\n\n## Risk Management Guidelines\n\nWhen
+                          trading as an agent, follow these safety rules:\n\n1.
+                          **Position sizing**: Never risk more than 5% of
+                          account value on a single trade\n2. **Leverage**:
+                          Start with low leverage (2-5x). Only experienced
+                          strategies should use 10x+\n3. **Stop losses**: Always
+                          set stop losses. Use the algo order endpoint for
+                          TP/SL\n4. **Diversification**: Don't concentrate
+                          everything in one pair\n5. **Dead man's switch**: Use
+                          `POST /v1/cancel/all/after` to auto-cancel orders if
+                          the agent disconnects\n\n```\nPOST
+                          /v1/cancel/all/after\nBody: { \"timeout\": 300000 } //
+                          Cancel all orders if no heartbeat in 5
+                          minutes\n```\n\n## Rate Limits\n\n- Order creation: 10
+                          requests/second\n- General API: 10 requests/second\n-
+                          WebSocket: Real-time data streaming available\n\n##
+                          Useful Endpoints Summary\n\n| Action | Method |
+                          Endpoint |\n|--------|--------|----------|\n| Place
+                          order | POST | /v1/order |\n| Batch orders | POST |
+                          /v1/batch-order |\n| Cancel order | DELETE |
+                          /v1/order?order_id=X |\n| Cancel all | DELETE |
+                          /v1/orders |\n| Get positions | GET | /v1/positions
+                          |\n| Get orders | GET | /v1/orders |\n| Get trades |
+                          GET | /v1/trades |\n| Account info | GET |
+                          /v1/client/info |\n| Market data | GET |
+                          /v1/public/info |\n| Orderbook | GET |
+                          /v1/public/orderbook/PERP_BTC_USDC |\n| Withdraw |
+                          POST | /v1/withdraw |\n| Set leverage | POST |
+                          /v1/client/leverage |\n| Stop loss / TP | POST |
+                          /v1/algo/order |\n| Cancel algo order | DELETE |
+                          /v1/algo/order?order_id=X |\n| Get algo orders | GET |
+                          /v1/algo/orders |\n| Dead man switch | POST |
+                          /v1/cancel/all/after |\n\n## Key Recovery &
+                          Security\n\n**CRITICAL**: When the agent creates a
+                          wallet, it generates a private key. This key is the
+                          ONLY way to access funds in that wallet. Follow these
+                          rules:\n\n### Private Key Storage\n- **Always persist
+                          the private key** to durable storage (encrypted file,
+                          database, or vault) immediately after generation\n-
+                          Never store the private key only in memory — if the
+                          process crashes, the key is lost\n- Return the private
+                          key to the agent owner so they have a backup\n\n### If
+                          the Bot Dies\n1. The wallet and all funds are still
+                          safe on-chain\n2. Anyone with the private key can
+                          recover access\n3. Use the private key to:\n - Import
+                          the wallet into MetaMask or any EVM wallet\n - Create
+                          a new Orderly Key and resume API trading\n - Withdraw
+                          all funds via the Orderly vault contract directly\n4.
+                          Funds in the Orderly vault can also be withdrawn by
+                          calling the vault contract directly with the wallet's
+                          private key — no API key needed\n\n### Dead Man's
+                          Switch\nUse the dead man's switch to auto-cancel all
+                          open orders if the bot stops sending
+                          heartbeats:\n\n```\nPOST /v1/cancel/all/after\nBody: {
+                          \"delay\": 300 } // Cancel all orders if no heartbeat
+                          in 300 seconds\n```\n\nThis prevents the bot from
+                          holding open orders when it's not actively managing
+                          them.\n\n### Recommended Architecture\n```\nAgent
+                          Process\n ├── On start: load private key from
+                          encrypted storage\n ├── On first run: generate key →
+                          save to storage → return to owner\n ├── Every 60s:
+                          send dead man's switch heartbeat\n └── On shutdown:
+                          cancel all orders, optionally close
+                          positions\n```\n\n## Full Documentation\n\n- Orderly
+                          API:
+                          https://orderly.network/docs/build-on-omnichain/evm-api/introduction\n-
+                          Authentication:
+                          https://orderly.network/docs/build-on-omnichain/evm-api/api-authentication\n-
+                          SDK:
+                          https://orderly.network/docs/sdks/overview\n","documentation":{"integration_guide":"https://hyperclaw.xyz/developers","orderly_api":"https://orderly.network/docs/build-on-omnichain/evm-api/introduction","orderly_auth":"https://orderly.network/docs/build-on-omnichain/evm-api/api-authentication"}}</current_timestamp_ms
+                        ></ed25519_signature_base64url
+                      ></your_ed25519_public_key
+                    ></your_account_id
+                  ></your_wallet_address
+                ></eip712_signature
+              ></timestamp_ms_30_days_from_now
+            ></current_timestamp_ms
+          ></ed25519_public_key
+        ></your_wallet_address
+      ></eip712_signature
+    ></nonce_from_step_2a
+  ></current_timestamp_ms
+>
