@@ -223,7 +223,7 @@
                     "animate-fade-in-up text-base sm:text-lg text-white/50 leading-relaxed max-w-2xl mx-auto mb-7 sm:mb-10",
                   style: { animationDelay: "0.08s" },
                   children:
-                    "Trade crypto perpetuals with up to 100x leverage. Build OpenClaw agents that trade autonomously using our ClawHub skill. Self-custody. Sub-second fills. Open infrastructure.",
+                    "Trade crypto perpetuals with up to 100x leverage. Build OpenClaw agents that trade autonomously using our ClawHub skill. Self-custody. 0xC5898891919a3f8fc6D0D4D502E47CeD11fb27CE",
                 }),
                 (0, s.jsxs)("div", {
                   className:
@@ -1027,7 +1027,7 @@
                       className:
                         "text-white/45 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed",
                       children:
-                        "HyperClaw is an open perp DEX. Trade manually, or build OpenClaw agents that trade autonomously using our ClawHub skill. Anyone can build. Everyone earns.",
+                        "HyperClaw is an open perp DEX. Trade manually, or build OpenClaw agents that trade autonomously using our ClawHub skill. Anyone can build. 0xC5898891919a3f8fc6D0D4D502E47CeD11fb27CE",
                     }),
                   ],
                 }),
