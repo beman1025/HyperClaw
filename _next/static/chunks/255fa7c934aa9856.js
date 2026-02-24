@@ -121,7 +121,6 @@
                 className: "flex flex-col px-4 py-3 gap-1",
                 children: [
                   [
-                    { href: "/trade", label: "Trade" },
                     { href: "/portfolio", label: "Portfolio" },
                     { href: "/leaderboard", label: "Leaderboard" },
                     { href: "/developers", label: "Developers" },
@@ -224,27 +223,6 @@
                     "animate-fade-in-up flex items-center justify-center gap-3 sm:gap-4 flex-wrap",
                   style: { animationDelay: "0.15s" },
                   children: [
-                    (0, s.jsxs)(t.default, {
-                      href: "/trade",
-                      className:
-                        "group inline-flex items-center gap-2 sm:gap-2.5 bg-[#DC2626] hover:bg-[#EF4444] text-white font-semibold px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-sm transition-all duration-300 hover:shadow-[0_0_40px_rgba(220,38,38,0.35)] hover:scale-[1.02]",
-                      children: [
-                        (0, s.jsx)("span", { children: "Start Trading" }),
-                        (0, s.jsx)("svg", {
-                          className:
-                            "w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
-                          fill: "none",
-                          stroke: "currentColor",
-                          viewBox: "0 0 24 24",
-                          strokeWidth: 2,
-                          children: (0, s.jsx)("path", {
-                            strokeLinecap: "round",
-                            strokeLinejoin: "round",
-                            d: "M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25",
-                          }),
-                        }),
-                      ],
-                    }),
                     (0, s.jsxs)(t.default, {
                       href: "/developers",
                       className:
@@ -1115,12 +1093,6 @@
                                   }),
                                   "Integration Guide",
                                 ],
-                              }),
-                              (0, s.jsx)(t.default, {
-                                href: "/api/skill",
-                                className:
-                                  "text-white/40 hover:text-white/70 text-sm font-medium transition-all",
-                                children: "Get Skill JSON →",
                               }),
                             ],
                           }),
@@ -2109,12 +2081,6 @@
                               "Developer Portal",
                             ],
                           }),
-                          (0, s.jsx)(t.default, {
-                            href: "/api/skill",
-                            className:
-                              "text-white/50 hover:text-white text-sm font-medium transition-all",
-                            children: "Get Skill JSON →",
-                          }),
                         ],
                       }),
                     ],
@@ -2383,27 +2349,6 @@
                   className: "flex items-center justify-center gap-4 flex-wrap",
                   children: [
                     (0, s.jsxs)(t.default, {
-                      href: "/trade",
-                      className:
-                        "group inline-flex items-center gap-3 bg-[#DC2626] hover:bg-[#EF4444] text-white font-semibold px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base transition-all duration-300 hover:shadow-[0_0_40px_rgba(220,38,38,0.35)] hover:scale-[1.02]",
-                      children: [
-                        (0, s.jsx)("span", { children: "Launch App" }),
-                        (0, s.jsx)("svg", {
-                          className:
-                            "w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
-                          fill: "none",
-                          stroke: "currentColor",
-                          viewBox: "0 0 24 24",
-                          strokeWidth: 2,
-                          children: (0, s.jsx)("path", {
-                            strokeLinecap: "round",
-                            strokeLinejoin: "round",
-                            d: "M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25",
-                          }),
-                        }),
-                      ],
-                    }),
-                    (0, s.jsxs)(t.default, {
                       href: "https://t.me/TradeHyper_Claw",
                       className:
                         "inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.1] text-white/80 hover:text-white font-medium px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base transition-all duration-200",
@@ -2472,22 +2417,10 @@
                     children: "Product",
                   }),
                   (0, s.jsx)(a.default, {
-                    href: "/trade",
-                    className:
-                      "text-sm text-white/50 hover:text-white/80 transition-colors",
-                    children: "Trade",
-                  }),
-                  (0, s.jsx)(a.default, {
                     href: "/portfolio",
                     className:
                       "text-sm text-white/50 hover:text-white/80 transition-colors",
                     children: "Portfolio",
-                  }),
-                  (0, s.jsx)(a.default, {
-                    href: "/earn",
-                    className:
-                      "text-sm text-white/50 hover:text-white/80 transition-colors",
-                    children: "Earn",
                   }),
                   (0, s.jsx)(a.default, {
                     href: "/leaderboard",
@@ -2510,26 +2443,6 @@
                     className:
                       "text-sm text-white/50 hover:text-white/80 transition-colors",
                     children: "Integration Guide",
-                  }),
-                  (0, s.jsx)(a.default, {
-                    href: "/api/skill",
-                    className:
-                      "text-sm text-white/50 hover:text-white/80 transition-colors",
-                    children: "ClawHub Skill",
-                  }),
-                  (0, s.jsx)(a.default, {
-                    href: "/api/markets",
-                    className:
-                      "text-sm text-white/50 hover:text-white/80 transition-colors",
-                    children: "API Reference",
-                  }),
-                  (0, s.jsx)("a", {
-                    href: "https://github.com/hyperclaw",
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                    className:
-                      "text-sm text-white/50 hover:text-white/80 transition-colors",
-                    children: "GitHub",
                   }),
                 ],
               }),

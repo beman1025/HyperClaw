@@ -17,7 +17,6 @@
         ssr: !1,
       }),
       n = [
-        { href: "/trade", label: "Trade" },
         { href: "/portfolio", label: "Portfolio" },
         { href: "/leaderboard", label: "Leaderboard" },
         { href: "/developers", label: "Developers" },

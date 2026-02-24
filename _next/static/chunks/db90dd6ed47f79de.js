@@ -256,30 +256,6 @@
                   }),
                 ],
               }),
-              (0, t.jsx)("div", {
-                className:
-                  "flex items-center gap-1 bg-white/[0.03] border border-white/[0.06] rounded-xl p-1 mb-6 sm:mb-8 w-full sm:w-fit overflow-x-auto scrollbar-hide",
-                children: ["quickstart", "api", "skill"].map((s) =>
-                  (0, t.jsx)(
-                    "button",
-                    {
-                      onClick: () => a(s),
-                      className: `px-5 py-2 rounded-lg text-sm font-medium transition-all ${
-                        e === s
-                          ? "bg-white/[0.08] text-white"
-                          : "text-white/40 hover:text-white/60 hover:bg-white/[0.03]"
-                      }`,
-                      children:
-                        "quickstart" === s
-                          ? "Quick Start"
-                          : "api" === s
-                          ? "API Reference"
-                          : "ClawHub Skill",
-                    },
-                    s
-                  )
-                ),
-              }),
               "quickstart" === e &&
                 (0, t.jsxs)("div", {
                   className: "space-y-8",
@@ -789,12 +765,6 @@ console.log("Order placed:", result)`,
                               className: "flex items-center gap-2 shrink-0",
                               children: [
                                 (0, t.jsx)("a", {
-                                  href: "/api/skill",
-                                  className:
-                                    "inline-flex items-center gap-2 bg-[#DC2626] hover:bg-[#EF4444] text-white font-medium px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs transition-all hover:shadow-[0_0_16px_rgba(220,38,38,0.2)]",
-                                  children: "Get as JSON",
-                                }),
-                                (0, t.jsx)("a", {
                                   href: "/hyperclaw-skill.md",
                                   target: "_blank",
                                   className:
@@ -868,12 +838,6 @@ console.log("Order placed:", result)`,
                         (0, t.jsxs)("p", {
                           className: "text-white/30 text-xs mt-4",
                           children: [
-                            "The full skill is served at ",
-                            (0, t.jsx)("code", {
-                              className: "text-[#DC2626]/70",
-                              children: "/api/skill",
-                            }),
-                            " as JSON or ",
                             (0, t.jsx)("code", {
                               className: "text-[#DC2626]/70",
                               children: "/hyperclaw-skill.md",
